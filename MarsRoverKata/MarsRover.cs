@@ -12,9 +12,9 @@ namespace MarsRoverKata
         private RoverDirection _direction = RoverDirection.North;
         public string Execute(string input)
         {
-            for (var i = 0; i < input.Length; i++)
-            { 
-                CalculateDirection();
+            foreach (var command in input)
+            {
+                CalculateDirection(command);
             }
 
             return CalculatePosition();
@@ -37,21 +37,21 @@ namespace MarsRoverKata
             }
         }
 
-        private void CalculateDirection()
+        private void CalculateDirection(char command)
         {
             switch (_direction)
             {
                 case RoverDirection.North:
-                    _direction = RoverDirection.West;
+                    _direction = (command == 'L') ? RoverDirection.West : RoverDirection.East;
                     break;
                 case RoverDirection.West:
-                    _direction = RoverDirection.South;
+                    _direction = (command == 'L') ? RoverDirection.South : RoverDirection.North;
                     break;
                 case RoverDirection.South:
-                    _direction = RoverDirection.East;
+                    _direction = (command == 'L') ? RoverDirection.East : RoverDirection.West;
                     break;
-                default:
-                    _direction = RoverDirection.North;
+                case RoverDirection.East:
+                    _direction = (command == 'L') ? RoverDirection.North : RoverDirection.South;
                     break;
             }
         }

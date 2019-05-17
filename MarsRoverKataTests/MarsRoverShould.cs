@@ -21,5 +21,15 @@ namespace MarsRoverKataTests
             MarsRover marsRover = new MarsRover();
             marsRover.Execute(input).ShouldBe(output);
         }
+
+        [TestCase("R", "E")]
+        [TestCase("RR", "S")]
+        [TestCase("RRR", "W")]
+        [TestCase("RRRR", "N")]
+        public void TurnRight(string input, string output)
+        {
+            MarsRover marsRover = new MarsRover();
+            marsRover.Execute(input).ShouldBe(output);
+        }
     }
 }
