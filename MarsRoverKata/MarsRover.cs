@@ -9,7 +9,7 @@ namespace MarsRoverKata
 {
     public class MarsRover
     {
-        private RoverDirection _direction = RoverDirection.North;
+        private RoverDirection _direction = North;
         public string Execute(string input)
         {
             foreach (var command in input)
@@ -24,13 +24,13 @@ namespace MarsRoverKata
         {
             switch (_direction)
             {
-                case RoverDirection.North:
+                case North:
                     return "N";
-                case RoverDirection.West:
+                case West:
                     return "W";
-                case RoverDirection.South:
+                case South:
                     return "S";
-                case RoverDirection.East:
+                case East:
                     return "E";
                 default:
                     return null;
@@ -41,27 +41,19 @@ namespace MarsRoverKata
         {
             switch (_direction)
             {
-                case RoverDirection.North:
-                    _direction = (command == 'L') ? RoverDirection.West : RoverDirection.East;
+                case North:
+                    _direction = (command == 'L') ? West : East;
                     break;
-                case RoverDirection.West:
-                    _direction = (command == 'L') ? RoverDirection.South : RoverDirection.North;
+                case West:
+                    _direction = (command == 'L') ? South : North;
                     break;
-                case RoverDirection.South:
-                    _direction = (command == 'L') ? RoverDirection.East : RoverDirection.West;
+                case South:
+                    _direction = (command == 'L') ? East : West;
                     break;
-                case RoverDirection.East:
-                    _direction = (command == 'L') ? RoverDirection.North : RoverDirection.South;
+                case East:
+                    _direction = (command == 'L') ? North : South;
                     break;
             }
         }
-    }
-
-    public enum RoverDirection
-    {
-        North,
-        South,
-        East,
-        West, 
     }
 }

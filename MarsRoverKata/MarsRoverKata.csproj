@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="MarsRover.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoverDirection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
