@@ -12,12 +12,21 @@ namespace MarsRoverKata
         private RoverDirection _direction = North;
         public string Execute(string input)
         {
+            var x = 0;
             foreach (var command in input)
             {
-                CalculateDirection(command);
+                if (command == 'L' || command == 'R')
+                {
+                    CalculateDirection(command);
+                }
+
+                if (command == 'M')
+                {
+                    x += 1;
+                }
             }
 
-            return CalculatePosition();
+            return $"{x}:0:{CalculatePosition()}";
         }
 
         private string CalculatePosition()
