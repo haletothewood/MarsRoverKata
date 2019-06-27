@@ -9,10 +9,12 @@ namespace MarsRoverKata
 {
     public class MarsRover
     {
+        private int _x;
+        private int _y;
         private RoverDirection _direction = North;
+
         public string Execute(string input)
         {
-            var x = 0;
             foreach (var command in input)
             {
                 if (command == 'L' || command == 'R')
@@ -22,11 +24,30 @@ namespace MarsRoverKata
 
                 if (command == 'M')
                 {
-                    x += 1;
+                    CalculateMovement();
                 }
             }
 
-            return $"{x}:0:{CalculatePosition()}";
+            return $"{_x}:{_y}:{CalculatePosition()}";
+        }
+
+        private void CalculateMovement()
+        {
+            switch (_direction)
+            {
+                case North:
+                    _x += 1;
+                    break;
+                case South:
+                    _x -= 1;
+                    break;
+                case East:
+                    _y += 1;
+                    break;
+                case West:
+                    _y -= 1;
+                    break;
+            }
         }
 
         private string CalculatePosition()

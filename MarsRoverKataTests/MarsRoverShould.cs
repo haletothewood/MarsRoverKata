@@ -41,5 +41,16 @@ namespace MarsRoverKataTests
             MarsRover marsRover = new MarsRover();
             marsRover.Execute(input).ShouldBe(output);
         }
+
+        [TestCase("MRM", "1:1:E")]
+        [TestCase("MRMLM", "2:1:N")]
+        [TestCase("MRRMLM", "0:1:E")]
+        [TestCase("MMMMMMRMMLMM", "8:2:N")]
+        [TestCase("MRLRLLLMLMMMMMMMLL", "0:7:W")]
+        public void MoveInTheRightDirection(string input, string output)
+        {
+            MarsRover marsRover = new MarsRover();
+            marsRover.Execute(input).ShouldBe(output);
+        }
     }
 }
