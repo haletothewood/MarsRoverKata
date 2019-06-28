@@ -9,8 +9,7 @@ namespace MarsRoverKata
 {
     public class MarsRover
     {
-        private int _x;
-        private int _y;
+        private Coordinate _coordinate = new Coordinate(0, 0);
         private RoverDirection _direction = North;
 
         public string Execute(string input)
@@ -19,38 +18,43 @@ namespace MarsRoverKata
             {
                 if (command == 'L' || command == 'R')
                 {
-                    CalculateDirection(command);
+                    Turn(command);
                 }
 
                 if (command == 'M')
                 {
-                    CalculateMovement();
+                    _coordinate = Move();
                 }
             }
 
-            return $"{_x}:{_y}:{CalculatePosition()}";
+            return $"{_coordinate.X}:{_coordinate.Y}:{Direction()}";
         }
 
-        private void CalculateMovement()
+        private Coordinate Move()
         {
+            var x = _coordinate.X;
+            var y = _coordinate.Y;
+            
             switch (_direction)
             {
                 case North:
-                    _x += 1;
+                    x += 1;
                     break;
                 case South:
-                    _x -= 1;
+                    x -= 1;
                     break;
                 case East:
-                    _y += 1;
+                    y += 1;
                     break;
                 case West:
-                    _y -= 1;
+                    y -= 1;
                     break;
             }
+
+            return new Coordinate(x, y);
         }
 
-        private string CalculatePosition()
+        private string Direction()
         {
             switch (_direction)
             {
@@ -67,7 +71,7 @@ namespace MarsRoverKata
             }
         }
 
-        private void CalculateDirection(char command)
+        private void Turn(char command)
         {
             switch (_direction)
             {
