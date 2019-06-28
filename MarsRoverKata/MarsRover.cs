@@ -11,6 +11,8 @@ namespace MarsRoverKata
     {
         private Coordinate _coordinate = new Coordinate(0, 0);
         private RoverDirection _direction = North;
+        private const int MaxHeight = 10;
+        private const int MaxWidth = 10;
 
         public string Execute(string input)
         {
@@ -39,15 +41,19 @@ namespace MarsRoverKata
             {
                 case North:
                     x += 1;
+                    if (x > MaxHeight) x = 0;
                     break;
                 case South:
                     x -= 1;
+                    if (x < 0) x = MaxHeight;
                     break;
                 case East:
                     y += 1;
+                    if (y > MaxWidth) y = 0;
                     break;
                 case West:
                     y -= 1;
+                    if (y < 0) y = MaxWidth;
                     break;
             }
 

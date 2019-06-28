@@ -52,5 +52,37 @@ namespace MarsRoverKataTests
             MarsRover marsRover = new MarsRover();
             marsRover.Execute(input).ShouldBe(output);
         }
+
+        [TestCase("MMMMMMMMMMM", "0:0:N")]
+        [TestCase("MMMMMMMMMMMMMMMMMMMMMM", "0:0:N")]
+        public void WrapAroundIfMovingPastMaxHeight(string input, string output)
+        {
+            MarsRover marsRover = new MarsRover();
+            marsRover.Execute(input).ShouldBe(output);
+        }
+
+        [TestCase("RRM", "10:0:S")]
+        [TestCase("RRMMMMMMMMMMMM", "10:0:S")]
+        public void WrapAroundIfMovingBelowMaxHeight(string input, string output)
+        {
+            MarsRover marsRover = new MarsRover();
+            marsRover.Execute(input).ShouldBe(output);
+        }
+
+        [TestCase("RMMMMMMMMMMM", "0:0:E")]
+        [TestCase("RMMMMMMMMMMMMMMMMMMMMMM", "0:0:E")]
+        public void WrapAroundIfMovingEastBeyondWidth(string input, string output)
+        {
+            MarsRover marsRover = new MarsRover();
+            marsRover.Execute(input).ShouldBe(output);
+        }
+
+        [TestCase("LM", "0:10:W")]
+        [TestCase("LMMMMMMMMMMMM", "0:10:W")]
+        public void WrapAroundIfMovingWestBeyondWidth(string input, string output)
+        {
+            MarsRover marsRover = new MarsRover();
+            marsRover.Execute(input).ShouldBe(output);
+        }
     }
 }
