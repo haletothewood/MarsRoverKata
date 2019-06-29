@@ -1,4 +1,5 @@
-﻿using static MarsRoverKata.RoverDirection;
+﻿using System;
+using static MarsRoverKata.RoverDirection;
 
 namespace MarsRoverKata
 {
@@ -6,8 +7,13 @@ namespace MarsRoverKata
     {
         private Coordinate _coordinate = new Coordinate(0, 0);
         private RoverDirection _direction = North;
-        private const int MaxHeight = 10;
-        private const int MaxWidth = 10;
+        private readonly Grid _grid;
+        private bool _obstacleHit;
+
+        public MarsRover(Grid grid)
+        {
+            _grid = grid;
+        }
 
         public string Execute(string input)
         {
@@ -15,12 +21,13 @@ namespace MarsRoverKata
             {
                 if (command == 'L' || command == 'R')
                 {
-                    Turn(command);
+                    _direction = Turn(command);
                 }
 
                 if (command == 'M')
                 {
                     _coordinate = Move();
+                    if (_obstacleHit) return $"O:{_coordinate.X}:{_coordinate.Y}:{Direction()}";
                 }
             }
 
@@ -31,24 +38,40 @@ namespace MarsRoverKata
         {
             var x = _coordinate.X;
             var y = _coordinate.Y;
-            
+
             switch (_direction)
             {
                 case North:
-                    x += 1;
-                    if (x > MaxHeight) x = 0;
+                    if (_grid.HitObstacle(new Coordinate(x + 1, y)))
+                    {
+                        _obstacleHit = true;
+                    } else {
+                        x = x + 1 > _grid.Height ? 0 : x + 1;
+                    }
                     break;
                 case South:
-                    x -= 1;
-                    if (x < 0) x = MaxHeight;
+                    if (_grid.HitObstacle(new Coordinate(x - 1, y)))
+                    {
+                        _obstacleHit = true;
+                    } else {
+                        x = x - 1 < 0 ? _grid.Height : x - 1;
+                    }
                     break;
                 case East:
-                    y += 1;
-                    if (y > MaxWidth) y = 0;
+                    if (_grid.HitObstacle(new Coordinate(x, y + 1)))
+                    {
+                        _obstacleHit = true;
+                    } else {
+                        y = y + 1 > _grid.Width ? 0 : y + 1;
+                    }
                     break;
                 case West:
-                    y -= 1;
-                    if (y < 0) y = MaxWidth;
+                    if (_grid.HitObstacle(new Coordinate(x, y - 1)))
+                    {
+                        _obstacleHit = true;
+                    } else {
+                        y = y - 1 < 0 ? _grid.Width : y - 1;
+                    }
                     break;
             }
 
@@ -68,26 +91,24 @@ namespace MarsRoverKata
                 case East:
                     return "E";
                 default:
-                    return null;
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void Turn(char command)
+        private RoverDirection Turn(char command)
         {
             switch (_direction)
             {
                 case North:
-                    _direction = (command == 'L') ? West : East;
-                    break;
+                    return command == 'L' ? West : East;
                 case West:
-                    _direction = (command == 'L') ? South : North;
-                    break;
+                    return command == 'L' ? South : North;
                 case South:
-                    _direction = (command == 'L') ? East : West;
-                    break;
+                    return command == 'L' ? East : West;
                 case East:
-                    _direction = (command == 'L') ? North : South;
-                    break;
+                    return command == 'L' ? North : South;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

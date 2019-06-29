@@ -11,7 +11,8 @@ namespace MarsRoverKataTests
         [SetUp]
         public void InitializeTests()
         {
-            _marsRover = new MarsRover();
+            var grid = new Grid(10,10);
+            _marsRover = new MarsRover(grid);
         }
 
         [TestCase("L", "0:0:W")]
@@ -77,6 +78,15 @@ namespace MarsRoverKataTests
         public void WrapAroundIfMovingWestBeyondWidth(string input, string output)
         {
             _marsRover.Execute(input).ShouldBe(output);
+        }
+
+        [TestCase("MRMMMM", 1, 1, "O:1:0:E")]
+        [TestCase("MMMMRLLMRMMM", 6, 10, "O:5:10:N")]
+        public void ReportAnObstacleIfEncountered(string input, int x, int y, string output)
+        {
+            var grid = new Grid(10, 10, new Coordinate(x, y));
+            var marsRover = new MarsRover(grid);
+            marsRover.Execute(input).ShouldBe(output);
         }
     }
 }
