@@ -1,4 +1,5 @@
-﻿using MarsRoverKata;
+﻿using System.Collections.Generic;
+using MarsRoverKata;
 using NUnit.Framework;
 using Shouldly;
 
@@ -84,9 +85,19 @@ namespace MarsRoverKataTests
         [TestCase("MMMMRLLMRMMM", 6, 10, "O:5:10:N")]
         public void ReportAnObstacleIfEncountered(string input, int x, int y, string output)
         {
-            var grid = new Grid(10, 10, new Coordinate(x, y));
+            var obstacles = new List<Coordinate> {new Coordinate(x, y), new Coordinate(10, 10)};
+            var grid = new Grid(10, 10, obstacles);
             var marsRover = new MarsRover(grid);
             marsRover.Execute(input).ShouldBe(output);
+        }
+
+        [Test]
+        public void DontReportAnObstacleIfNotEncountered()
+        {
+            var obstacles = new List<Coordinate> {new Coordinate(1, 1)};
+            var grid = new Grid(10, 10, obstacles);
+            var marsRover = new MarsRover(grid);
+            marsRover.Execute("MMMMRMMLMM").ShouldNotStartWith("O:");
         }
     }
 }
